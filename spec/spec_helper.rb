@@ -1,7 +1,17 @@
+ENV["RACK_ENV"] = "test"
+
+require './app/app.rb'
+
+require 'capybara'
+require 'rspec'
+require 'capybara/rspec'
 require 'simplecov'
 require 'simplecov-console'
 require 'database_cleaner'
 
+Capybara.app = Chitter
+
+# SimpleCov setup in Rspec
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::Console,
   # Want a nice code coverage website? Uncomment this next line!
@@ -10,18 +20,30 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
 SimpleCov.start
 
 RSpec.configure do |config|
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transactions
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  # DatabaseCleaner setup in Rspec
+  # config.before(:suite) do
+  #   DatabaseCleaner.strategy = :transactions
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
+  #
+  # config.before(:each) do
+  #   DatabaseCleaner.start
+  # end
+  #
+  # config.after(:each) do
+  #   DatabaseCleaner.clean
+  # end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
 
-  config.after(:each) do
-    DatabaseCleaner.clean
+  # Regular Rspec Configuration
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+
 end
 
 RSpec.configure do |config|
