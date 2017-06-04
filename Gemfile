@@ -5,7 +5,7 @@ gem 'bcrypt'
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
 gem 'json', '~> 1.6'
-gem 'sinatra'
+gem 'sinatra', '~> 1.4.8'
 gem 'sinatra-flash'
 
 group :test do
