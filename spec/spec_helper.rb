@@ -21,19 +21,18 @@ SimpleCov.start
 
 RSpec.configure do |config|
   # DatabaseCleaner setup in Rspec
-  # config.before(:suite) do
-  #   DatabaseCleaner.strategy = :transactions
-  #   DatabaseCleaner.clean_with(:truncation)
-  # end
-  #
-  # config.before(:each) do
-  #   DatabaseCleaner.start
-  # end
-  #
-  # config.after(:each) do
-  #   DatabaseCleaner.clean
-  # end
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
   # Regular Rspec Configuration
   config.expect_with :rspec do |expectations|
